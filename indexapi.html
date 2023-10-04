@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>University Data</title>
+</head>
+<body>
+    <h2>University Data</h2>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Alpha Two Code</th>
+            <th>Number of Domains</th>
+        </tr>
+    </table>
+
+    <script>
+        fetch('http://universities.hipolabs.com/search?country=United+States')
+            .then(response => response.json())
+            .then(data => {
+                const table = document.querySelector('table');
+                const universities = data.slice(0, 20); // Get the first 20 records
+
+                universities.forEach(university => {
+                    const row = table.insertRow();
+                    const nameCell = row.insertCell(0);
+                    const countryCell = row.insertCell(1);
+                    const alphaTwoCodeCell = row.insertCell(2);
+                    const domainsCell = row.insertCell(3);
+
+                    nameCell.textContent = university.name;
+                    countryCell.textContent = university.country;
+                    alphaTwoCodeCell.textContent = university.alpha_two_code;
+                    domainsCell.textContent = university.domains.length;
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+</body>
+</html>
